@@ -30,6 +30,21 @@ unless node[:nfs_exports].nil?
   node[:nfs_exports].each do |export_directory, export|
     # Iterate through the clients permitted to access this export
     export[:clients].each do |client_network, client|
+
+      options_ary = Array.new
+
+      if client[:options]
+        options_ary << client[:options]
+      end
+
+      if client[:user_map]
+        options_ary << "anonuid=#{node['etc']['passwd'][client[:user_map]]['uid']}"
+      end
+
+      if client[:group_map]
+        options_ary << "anongid=#{node['etc']['passwd'][client[:group_map]]['gid']}"
+      end
+
       nfs_export "#{export_directory}" do
         network "#{client_network}"
         # Add export details if they've been specified (nfs cookbook provides
@@ -40,8 +55,8 @@ unless node[:nfs_exports].nil?
         unless client[:sync].nil?
           sync client[:sync]
         end
-        unless client[:options].nil?
-          options client[:options]
+        unless options_ary.nil?
+          options options_ary
         end
       end
     end
