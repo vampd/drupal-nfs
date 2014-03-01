@@ -1,3 +1,3 @@
 site :opscode
 
-metadata
+cookbook 'nfs', '~> 0.5.0'

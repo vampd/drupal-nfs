@@ -1,37 +1,54 @@
-Skeleton Cookbook
+Drupal-nfs Cookbook
 =================
 
-This is a testable skeleton cookbook designed for you or your organization to
-fork and modify appropriately. The cookbook comes with everything you need to
-develop infrastructure code with Chef and feel confident about it.
+Setup nfs shares
+
+[![Build Status](https://travis-ci.org/arknoll/drupal-nfs.png?branch=master)](https://travis-ci.org/arknoll/drupal-nfs)
+
+Try this cookbook with drupal-lamp https://github.com/newmediadenver/drupal-lamp
+
+To get it working with drupal-lamp:
+* Add reference in BerksFile
+* Add "recipe[drupal-nfs]", to the run list
 
 Requirements
 ------------
 
 ### Platform:
 
-*List supported platforms here*
+Ubuntu
 
 ### Cookbooks:
 
-*List cookbook dependencies here*
+nfs
 
 Attributes
 ----------
 
-*List attributes here*
+````
+"nfs_exports": {
+  "/assets": { # directory to share
+    "clients": { # who can access
+      "[ip address]": {
+        "writable": "true", # true or false
+        "sync": "", # true or false
+        "options": "" # see nfs cookbook for options
+      }
+    }
+  }
+}
 
 Recipes
 -------
 
-### skeleton::default
+### drupal-nfs::default
 
-*Explain what the recipe does here*
+Adds a mountable nfs share
 
 Testing
 -------
 
-[![Build Status](https://travis-ci.org/mlafeldt/skeleton-cookbook.png?branch=master)](https://travis-ci.org/mlafeldt/skeleton-cookbook)
+[![Build Status](https://travis-ci.org/arknoll/drupal-nfs.png?branch=master)](https://travis-ci.org/arknoll/drupal-nfs)
 
 The cookbook provides the following Rake tasks for testing:
 
@@ -44,12 +61,8 @@ The cookbook provides the following Rake tasks for testing:
     rake spec                         # Run ChefSpec examples
     rake test                         # Run all tests
 
-License and Author
-------------------
-
-Author:: YOUR_NAME (YOUR_EMAIL)
-
-Copyright:: YEAR, YOUR_NAME
+License
+-------
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

@@ -1,8 +1,8 @@
 #
-# Cookbook Name:: skeleton
+# Cookbook Name:: drupal-nfs
 # Attributes:: default
 #
-# Copyright (C) YEAR YOUR_NAME <YOUR_EMAIL>
+# Copyright (C) 2014 Alex Knoll <arknoll@gmail.com>
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,4 +17,4 @@
 # limitations under the License.
 #
 
-# Set meaningful node attributes here
+default[:nfs_exports] = {}

@@ -1,8 +1,9 @@
 #
-# Cookbook Name:: skeleton
-# Recipe:: default
+# Author::  Christopher Caldwell (<chrisolof@gmail.com>)
+# Cookbook Name:: drupal
+# Recipe:: nfs_server
 #
-# Copyright (C) YEAR YOUR_NAME <YOUR_EMAIL>
+# Copyright 2013, Christopher Caldwell.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,5 +18,36 @@
 # limitations under the License.
 #
 
-# Install/configure something here
-log "replace this with a meaningful resource"
+Chef::Log.debug "drupal::nfs_server - node[:nfs_exports] = #{node[:nfs_exports].inspect}"
+
+include_recipe "nfs"
+
+# Set up our exports, if we have any
+unless node[:nfs_exports].nil?
+  # Make sure we have the required package to export NFS shares
+  package 'nfs-kernel-server'
+  # Iterate through our exports
+  node[:nfs_exports].each do |export_directory, export|
+    # Iterate through the clients permitted to access this export
+    export[:clients].each do |client_network, client|
+      nfs_export "#{export_directory}" do
+        network "#{client_network}"
+        # Add export details if they've been specified (nfs cookbook provides
+        # defaults)
+        unless client[:writeable].nil?
+          writeable client[:writeable]
+        end
+        unless client[:sync].nil?
+          sync client[:sync]
+        end
+        unless client[:options].nil?
+          options client[:options]
+        end
+      end
+    end
+  end
+  # Make NFS server aware of our new export(s)
+  execute "exportfs -ra" do
+    command "exportfs -ra"
+  end
+end
