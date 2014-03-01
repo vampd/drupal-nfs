@@ -30,8 +30,8 @@ Attributes
   "/assets": { # directory to share
     "clients": { # who can access
       "[ip address]": {
-        "writable": "true", # true or false
-        "sync": "", # true or false
+        "writable": true, # true or false
+        "sync": , # true or false
         "options": "" # see nfs cookbook for options
       }
     }
