@@ -1,8 +1,5 @@
 require "spec_helper"
 
 # Write integration tests with Serverspec - http://serverspec.org/
-describe "skeleton::default" do
-  it "does something" do
-    pending "Replace this with meaningful tests"
-  end
+describe "drupal-nfs::default" do
 end
