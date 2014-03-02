@@ -22,17 +22,53 @@ Ubuntu
 
 nfs
 
+Usage
+-----
+### example:
+
+This example will open up an nfs share: 
+* for the folder located at /srv/www/example/current
+* it will be writable
+* when written to from the mount it will act as if you are user www-data and group www-data
+
+````
+"nfs_exports": {
+    "/srv/www/example/current": {
+      "clients": {
+        "*": {
+          "writable": true,
+          "sync": false,
+          "options": [
+            "no_subtree_check",
+            "all_squash",
+            "async"
+          ],
+          "user_map": "www-data",
+          "group_map": "www-data"
+        }
+      }
+    }
+  }
+````
+
+### Mount example:
+````
+sudo mount -o resvport [server ip]:/srv/www/example/current test
+````
+
 Attributes
 ----------
 
 ````
 "nfs_exports": {
-  "/assets": { # directory to share
+  "[share directory]": { # directory to share
     "clients": { # who can access
-      "[ip address]": {
+      "[ip address or *]": {
         "writable": true, # true or false
         "sync": , # true or false
-        "options": "" # see nfs cookbook for options
+        "options": [], # array of nfs exports options. See nfs cookbook for options
+        "user_map": "www-data", # this sets the anon user by name
+        "group_map": "www-data" # this sets the anon group by name
       }
     }
   }
