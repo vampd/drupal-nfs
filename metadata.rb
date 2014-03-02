@@ -1,4 +1,4 @@
-name             "skeleton"
+name             "drupal-nfs"
 maintainer       "Alex Knoll"
 maintainer_email "arknoll@gmail.com"
 license          "Apache 2.0"
