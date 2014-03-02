@@ -32,7 +32,7 @@ unless node[:nfs_exports].nil?
     export[:clients].each do |client_network, client|
 
       options_ary = Array.new
-      
+
       options_ary << client[:options] if client[:options]
 
       options_ary << "anonuid=#{node['etc']['passwd'][client[:user_map]]['uid']}" if client[:user_map]
@@ -43,11 +43,11 @@ unless node[:nfs_exports].nil?
         network "#{client_network}"
         # Add export details if they've been specified (nfs cookbook provides
         # defaults)
-        
+
         writeable client[:writeable] unless client[:writeable].nil?
-        
+
         sync client[:sync] unless client[:sync].nil?
-        
+
         options options_ary unless options_ary.nil?
       end
     end
