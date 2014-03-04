@@ -43,8 +43,8 @@ This example will open up an nfs share:
             "all_squash",
             "async"
           ],
-          "user_map": "www-data",
-          "group_map": "www-data"
+          "anon_user_name": "www-data",
+          "anon_group_name": "www-data"
         }
       }
     }

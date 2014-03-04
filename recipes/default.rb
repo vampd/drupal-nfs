@@ -35,9 +35,9 @@ unless node[:nfs_exports].nil?
 
       options_ary << client[:options] if client[:options]
 
-      options_ary << "anonuid=#{node[:etc][:passwd][client[:user_map]][:uid]}" if client[:user_map]
+      options_ary << "anonuid=#{node[:etc][:passwd][client[:anon_user_name]][:uid]}" if client[:anon_user_name]
 
-      options_ary << "anongid=#{node[:etc][:passwd][client[:group_map]][:gid]}" if client[:group_map]
+      options_ary << "anongid=#{node[:etc][:passwd][client[:anon_group_name]][:gid]}" if client[:anon_group_name]
 
       nfs_export export_directory do
         network client_network
