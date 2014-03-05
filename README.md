@@ -26,9 +26,9 @@ Usage
 -----
 ### example:
 
-This example will open up an nfs share: 
+This example will open up an nfs share:
 * for the folder located at /srv/www/example/current
-* it will be writable
+* it will be writeable
 * when written to from the mount it will act as if you are user www-data and group www-data
 
 ````
@@ -36,7 +36,7 @@ This example will open up an nfs share:
     "/srv/www/example/current": {
       "clients": {
         "*": {
-          "writable": true,
+          "writeable": true,
           "sync": false,
           "options": [
             "no_subtree_check",
@@ -64,7 +64,7 @@ Attributes
   "[share directory]": { # directory to share
     "clients": { # who can access
       "[ip address or *]": {
-        "writable": true, # true or false
+        "writeable": true, # true or false
         "sync": , # true or false
         "options": [], # array of nfs exports options. See nfs cookbook for options
         "user_map": "www-data", # this sets the anon user by name
