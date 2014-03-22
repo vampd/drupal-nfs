@@ -5,12 +5,6 @@ Setup nfs shares
 
 [![Build Status](https://travis-ci.org/arknoll/drupal-nfs.png?branch=master)](https://travis-ci.org/arknoll/drupal-nfs)
 
-Try this cookbook with drupal-lamp https://github.com/newmediadenver/drupal-lamp
-
-To get it working with drupal-lamp:
-* Add reference in BerksFile
-* Add "recipe[drupal-nfs]", to the run list
-
 Requirements
 ------------
 
@@ -21,6 +15,19 @@ Ubuntu
 ### Cookbooks:
 
 nfs
+
+Drupal-lamp usage
+-----------------
+Try this cookbook with drupal-lamp https://github.com/newmediadenver/drupal-lamp
+
+To get it working with drupal-lamp:
+* Open Berksfile in your drupal-lamp directory and place the following line in there
+````
+cookbook "drupal-nfs", git: "https://github.com/arknoll/drupal-nfs", branch: "master"
+````
+* Open chef/roles/drupal_lamp.rb in your drupal-lamp directory and add "recipe[drupal-nfs]", to the env_run_lists run list array
+
+* run either 'vagrant up' or 'vagrant provision'
 
 Usage
 -----
