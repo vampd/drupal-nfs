@@ -31,7 +31,9 @@ cookbook "drupal-nfs", git: "https://github.com/arknoll/drupal-nfs", branch: "ma
 
 Usage
 -----
-### example:
+### Mac Example:
+
+**Expose a share of /srv/www/example/current**
 
 This example will open up an nfs share:
 * for the folder located at /srv/www/example/current
@@ -58,10 +60,53 @@ This example will open up an nfs share:
   }
 ````
 
-### Mount example:
+**Mount the share on your mac**
 ````
 sudo mount -o resvport [server ip]:/srv/www/example/current test
 ````
+
+
+### Linux Example:
+
+**Expose a share of /assets**
+
+This example will open up an nfs share of the /assets folder on the virtualized server with the following details:
+
+* Only clients with the IP address of 192.168.50.1 can mount this share (the default IP of a drupal-lamp host machine as seen by the virtualized server).
+* Those who mount this will have write access.
+* The [NFS sync option][1] will be used to ensure greater data cache coherence.
+* Those who mount this will come through as www-data:www-data (uid 33 & gid 33 in a default drupal-lamp virtualized Ubuntu server).
+
+
+````
+  "nfs_exports": {
+    "/assets": {
+      "clients": {
+        "192.168.50.1": {
+          "writeable": true,
+          "sync": true,
+          "options": [
+            "all_squash",
+            "anonuid=33",
+            "anongid=33"
+          ]
+        }
+      }
+    }
+  }
+````
+
+
+**Mount the share on your linux machine**
+
+Note:  Assumes you've exposed the share /assets on your virtualized server and you've created an empty assets folder in your drupal-lamp directory.
+
+From the host machine:
+
+````
+sudo mount 192.168.50.5:/assets /home/[your_user_name]/drupal-lamp/assets
+````
+
 
 Attributes
 ----------
@@ -129,3 +174,6 @@ We welcome contributed improvements and bug fixes via the usual workflow:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new pull request
+
+
+  [1]: http://linux.die.net/man/5/nfs
