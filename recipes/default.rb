@@ -56,4 +56,16 @@ unless node[:nfs_exports].nil?
   execute "exportfs -ra" do
     command "exportfs -ra"
   end
+  # add cachefilesd to improve nfs performance
+  package "cachefilesd" do
+    action :install
+  end
+  
+  file "/etc/default/cachefilesd" do
+    content <<-EOS
+  RUN=yes
+    EOS
+    action :create
+    mode 0755
+  end
 end
